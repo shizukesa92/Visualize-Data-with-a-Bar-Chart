@@ -15,10 +15,13 @@ body {
 
 #header,
 #footer {
+        display: flex;
         width: 100vw;
         height: 5vh;
-        color: black;
+        color: white;
         background-color: #6F6D6E;
+        justify-content: center;
+        align-items: center;
 }
 
 h1 {

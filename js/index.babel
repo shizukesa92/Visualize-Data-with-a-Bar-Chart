@@ -5,3 +5,5 @@ req.onload = () => {
 	let data = JSON.parse(req.responseText);
 	document.getElementById("description").innerHTML = data.description;
 };
+
+// TODO: Graph next
