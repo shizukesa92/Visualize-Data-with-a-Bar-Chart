@@ -21,8 +21,7 @@ body {
         background-color: #6F6D6E;
 }
 
-h1,
-h2 {
+h1 {
         margin: 0 !important;
         padding: 0 !important;
 }
@@ -36,8 +35,17 @@ h2 {
 }
 
 #chart {
+        position: relative;
         background-color: white;
         margin: 0 auto;
         width: 80vw;
         height: 80vh;
+        padding: 5vh;
+}
+
+#description {
+        width: 100%;
+        bottom: 5vh;
+        left: 0;
+        position: absolute;
 }
