@@ -2,9 +2,51 @@ const req = new XMLHttpRequest();
 req.open("GET", "https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json", true);
 req.send();
 req.onload = () => {
-	let data = JSON.parse(req.responseText);
+	//Note: Do NOT stringify or it will become a string and array calls like [0][0] will return the first CHARACTER
+	let data = JSON.parse(req.responseText),
+		dataset = data.data;
+
+	// Bottom description
 	document.getElementById("description").innerHTML = data.description;
 
-	const dataset = JSON.stringify(data.data);
-	console.log(dataset);
+	//console.log(dataset);
+
+	let min = new Date(dataset[0][0]),
+		max = new Date(dataset[274][0]);
+	//console.log(min, max);
+
+	// Relative height and width of the SVG. Actual height and width are defined within CSS and not appended (contrary to what FCC tutorial taught) 
+	// Note 2:1 ratio because container ratio is roughly 2:1
+	const padding = 50,
+		w = 950 - padding,
+		h = 450 - padding;
+
+	let width = Math.ceil(w / dataset.length);
+
+	//Set scaling
+	const xScale = d3.scaleTime() // d3.scaleTime - create a linear scale for time.
+		.domain([min, max])
+		.range([0, w]);
+
+	const yScale = d3.scaleLinear()
+		.domain([0, d3.max(dataset, d => d[1])])
+		.range([h, 0]);
+
+	const xAxis = d3.axisBottom(xScale),
+		yAxis = d3.axisLeft(yScale);
+
+	// Set SVG dimensions and append axes
+	let chart = d3.select("svg")
+		.attr("width", w + padding * 2)
+		.attr("height", h + padding * 2)
+
+
+	chart.append("g")
+		.attr("transform", `translate(${padding},${h})`)
+		.call(xAxis);
+
+	chart.append("g")
+		.attr("transform", `translate(${padding},0)`)
+		.call(yAxis)
+
 };
