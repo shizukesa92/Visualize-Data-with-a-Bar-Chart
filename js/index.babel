@@ -4,6 +4,7 @@ req.send();
 req.onload = () => {
 	let data = JSON.parse(req.responseText);
 	document.getElementById("description").innerHTML = data.description;
-};
 
-// TODO: Graph next
+	const dataset = JSON.stringify(data.data);
+	console.log(dataset);
+};
