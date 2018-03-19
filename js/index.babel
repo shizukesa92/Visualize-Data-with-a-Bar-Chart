@@ -23,7 +23,7 @@ req.onload = () => {
 			left: 50,
 			right: 10
 		},
-		w = 950 - padding.left - padding.right,
+		w = 1000 - padding.left - padding.right,
 		h = 450 - padding.top - padding.bottom;
 
 	let width = Math.ceil(w / dataset.length);
@@ -58,6 +58,7 @@ req.onload = () => {
 	var div = d3.select("#chart").append("div")
 		.attr("class", "tooltip")
 		.style("opacity", 0);
+
 	chart.selectAll("rect")
 		.data(dataset)
 		.enter()
@@ -73,9 +74,9 @@ req.onload = () => {
 			return h - yScale(d[1]);
 		})
 		.attr("width", width)
-		.on("mouseover", function(d) {
+		.on("mouseover", d => {
 			let rect = d3.select(this);
-			rect.attr("class", "mouseover");
+			rect.attr("class", "highlight");
 			let currentDateTime = new Date(d[0]);
 			let year = currentDateTime.getFullYear();
 			let month = currentDateTime.getMonth();
@@ -83,13 +84,13 @@ req.onload = () => {
 			div.transition()
 				.duration(200)
 				.style("opacity", 0.9);
-			div.html("<span class='amount'>" + d3.format("$,.2f")(dollars) + "&nbsp;Billion </span><br><span class='year'>" + year + ' - ' + month + "</span>")
-				.style("left", (d3.event.pageX + 5) + "px")
-				.style("top", (d3.event.pageY - 50) + "px");
+			div.html("<span>" + d3.format("$,.2f")(dollars) + "B</span><br><span>" + month + "/" + year + "</span>") // localized fixed-point currency, "(£3.50)" https://github.com/d3/d3-format
+				.style("left", (d3.event.pageX - 150) + "px") //https://bl.ocks.org/mbostock/1087001
+				.style("top", (d3.event.pageY - 100) + "px");
 		})
-		.on("mouseout", function() {
+		.on("mouseout", () => {
 			let rect = d3.select(this);
-			rect.attr("class", "mouseoff");
+			rect.attr("class", "none");
 			div.transition()
 				.duration(500)
 				.style("opacity", 0);
