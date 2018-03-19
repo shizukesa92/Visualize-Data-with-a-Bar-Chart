@@ -17,9 +17,14 @@ req.onload = () => {
 
 	// Relative height and width of the SVG. Actual height and width are defined within CSS and not appended (contrary to what FCC tutorial taught) 
 	// Note 2:1 ratio because container ratio is roughly 2:1
-	const padding = 50,
-		w = 950 - padding,
-		h = 450 - padding;
+	const padding = {
+			top: 10,
+			bottom: 20,
+			left: 50,
+			right: 10
+		},
+		w = 950 - padding.left - padding.right,
+		h = 450 - padding.top - padding.bottom;
 
 	let width = Math.ceil(w / dataset.length);
 
@@ -37,16 +42,16 @@ req.onload = () => {
 
 	// Set SVG dimensions and append axes
 	let chart = d3.select("svg")
-		.attr("width", w + padding * 2)
-		.attr("height", h + padding * 2)
+		.attr("width", w + padding.right + padding.left)
+		.attr("height", h + padding.bottom + padding.top)
 
 
 	chart.append("g")
-		.attr("transform", `translate(${padding},${h})`)
+		.attr("transform", `translate(${padding.left},${h+padding.top})`)
 		.call(xAxis);
 
 	chart.append("g")
-		.attr("transform", `translate(${padding},0)`)
+		.attr("transform", `translate(${padding.left},${padding.top})`)
 		.call(yAxis)
 
 };
