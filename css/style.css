@@ -22,11 +22,13 @@ body {
         background-color: #6F6D6E;
         justify-content: center;
         align-items: center;
+        font-size: 90%;
 }
 
 h1 {
         margin: 0 !important;
         padding: 0 !important;
+        font-size: 2vw !important;
 }
 
 #main {
@@ -39,6 +41,10 @@ h1 {
 
 #chart {
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
         background-color: white;
         margin: 0 auto;
         width: 80%;
@@ -46,9 +52,34 @@ h1 {
         padding: 5%;
 }
 
+
+svg {
+        margin: 0 auto;
+}
+
 #description {
-        width: 100%;
-        bottom: 5%;
-        left: 0;
+
+        font-size: 1vw;
+}
+
+.highlight {
+        fill: white;
+}
+
+.tooltip {
         position: absolute;
+        text-align: left;
+        width: auto;
+        height: auto;
+        padding: 3px 5px 3px 5px;
+        font: 1em sans-serif;
+        border: 0px;
+        border-radius: 5px;
+        pointer-events: none;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+        background-color: lightsteelblue;
+}
+
+#chart .mouseover {
+        fill: white;
 }

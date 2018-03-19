@@ -54,6 +54,10 @@ req.onload = () => {
 		.call(yAxis)
 
 	//Append data as bars
+
+	var div = d3.select("#chart").append("div")
+		.attr("class", "tooltip")
+		.style("opacity", 0);
 	chart.selectAll("rect")
 		.data(dataset)
 		.enter()
@@ -68,6 +72,27 @@ req.onload = () => {
 		.attr("height", d => {
 			return h - yScale(d[1]);
 		})
-		.attr("width", width);
+		.attr("width", width)
+		.on("mouseover", function(d) {
+			let rect = d3.select(this);
+			rect.attr("class", "mouseover");
+			let currentDateTime = new Date(d[0]);
+			let year = currentDateTime.getFullYear();
+			let month = currentDateTime.getMonth();
+			let dollars = d[1];
+			div.transition()
+				.duration(200)
+				.style("opacity", 0.9);
+			div.html("<span class='amount'>" + d3.format("$,.2f")(dollars) + "&nbsp;Billion </span><br><span class='year'>" + year + ' - ' + month + "</span>")
+				.style("left", (d3.event.pageX + 5) + "px")
+				.style("top", (d3.event.pageY - 50) + "px");
+		})
+		.on("mouseout", function() {
+			let rect = d3.select(this);
+			rect.attr("class", "mouseoff");
+			div.transition()
+				.duration(500)
+				.style("opacity", 0);
+		});
 
 };
