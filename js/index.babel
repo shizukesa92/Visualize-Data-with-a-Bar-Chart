@@ -45,7 +45,6 @@ req.onload = () => {
 		.attr("width", w + padding.right + padding.left)
 		.attr("height", h + padding.bottom + padding.top)
 
-
 	chart.append("g")
 		.attr("transform", `translate(${padding.left},${h+padding.top})`)
 		.call(xAxis);
@@ -53,5 +52,22 @@ req.onload = () => {
 	chart.append("g")
 		.attr("transform", `translate(${padding.left},${padding.top})`)
 		.call(yAxis)
+
+	//Append data as bars
+	chart.selectAll("rect")
+		.data(dataset)
+		.enter()
+		.append("rect")
+		.attr("class", "bar")
+		.attr("x", d => {
+			return xScale(new Date(d[0])) + padding.left;
+		})
+		.attr("y", d => {
+			return yScale(d[1]) + padding.top;
+		})
+		.attr("height", d => {
+			return h - yScale(d[1]);
+		})
+		.attr("width", width);
 
 };
